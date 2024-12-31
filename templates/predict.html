@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* General body styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-top: 40px;
+            color: #333;
+        }
+
+        .results-container {
+            width: 80%;
+            max-width: 1000px;
+            margin-top: 30px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .result-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .result-card:hover {
+            transform: scale(1.05);
+        }
+
+        .result-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .result-card p {
+            font-size: 1rem;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .result-card .probability {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff6347; /* Tomato color for the probability */
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Prediction Results</h1>
+
+    {% if results %}
+        <div class="results-container">
+            {% for result in results %}
+                <div class="result-card">
+                    <h3>{{ result.species }}</h3>
+                    <p>Species ID: {{ result.species_id }}</p>
+                    <p class="probability">{{ result.probability }}%</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="error">No predictions found. Please upload an image and try again.</p>
+    {% endif %}
+
+    <a href="/">Go back to Upload</a>
+</body>
+</html>
